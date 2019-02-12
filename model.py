@@ -63,7 +63,7 @@ class Model:
                     if current_row == self.name_row:
                         new_student.name = cell.value
                     elif current_row == self.booking_row:
-                        new_student.booking = cell.value
+                        new_student.booking = int(cell.value)
                     elif current_row == self.schedcode_row:
                         new_student.classes_per_day = [int(i) for i in cell.value if i != "s"]
                     elif current_row >= self.dates_start_row:
