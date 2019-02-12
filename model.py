@@ -67,7 +67,7 @@ class Model:
                     elif current_row == self.schedcode_row:
                         new_student.classes_per_day = [int(i) for i in cell.value if i != "s"]
                     elif current_row >= self.dates_start_row:
-                        year_month_day = str(cell.value)
+                        year_month_day = str(cell.value)[:10]
                         try:
                             struct_time_date = time.strptime(year_month_day, self.date_format)
                         except ValueError:

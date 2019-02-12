@@ -146,7 +146,7 @@ class MainApplication:
 
         if value < 1:
             self.booking_label.config(text=value, bg="red", bd=5)
-        elif 0 > value < 5:
+        elif value < 5:
             self.booking_label.config(text=value, bg="yellow", bd=5)
         else:
             self.booking_label.config(text=value, bg="green", bd=5)
@@ -245,8 +245,7 @@ class MainApplication:
             self.model.save_sheet()
         except PermissionError:
             tkmb.showerror("Error", "Please close the record file and try again!")
-        except AttributeError:
-            print("No")
+            self.model.save_sheet()
 
     def on_closing(self):
         self.flush_changes()
