@@ -214,19 +214,14 @@ class MainApplication:
 
         # Mark dates green if they exist in the record, white if not
         index = self.students_lb.index(ACTIVE)
-        for item in [time.strptime(i, self.date_format) for i in self.dates_lb.get(0, END)]:
-            # Turn the date list upside down for user ease. Will be modifiable in settings.
-            reversed_dates_list = enumerate(reversed(list(self.model.students_list[index].class_dates_until_today)))
-            # Get the index of EVERY occurrence of the given date.
-            date_occurrences = [i for i, x in reversed_dates_list if x == item]
+        struct_date_items_dates_lb = [time.strptime(i, self.date_format) for i in self.dates_lb.get(0, END)]
+        for i, item in enumerate(struct_date_items_dates_lb):
             if item in self.model.students_list[index].dates:
-                for i in date_occurrences:
-                    # Turn them light green with white text
-                    self.dates_lb.itemconfig(i, bg="#59f766", fg="white")
+                # Turn them light green with white text
+                self.dates_lb.itemconfig(i, bg="#59f766", fg="white")
             else:
-                for i in date_occurrences:
-                    # Turn them gray with white text
-                    self.dates_lb.itemconfig(i, bg="gray", fg="white")
+                # Turn them gray with white text
+                self.dates_lb.itemconfig(i, bg="gray", fg="white")
 
         self.master.after(100, self.update_ui)
 
