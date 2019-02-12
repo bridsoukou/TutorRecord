@@ -81,6 +81,7 @@ class MainApplication:
         file_menu = Menu(menu, tearoff=0)
         file_menu.add_command(label="Select Record File", command=self.open_filedialog)
         file_menu.add_command(label="Refresh Record File", command=self.refresh_record)
+        file_menu.add_command(label="Update Record File", command=self.flush_changes)
 
         def print_dates():
             student = self.model.students_list[self.get_student_from_name(self.students_lb.get(ACTIVE))]
