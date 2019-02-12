@@ -121,13 +121,11 @@ class MainApplication:
         struct_date = time.strptime(date, self.date_format)
         how_many_classes = int(self.classes_on_day.get())
         if self.had_class_var.get() == 0:
-            self.dates_lb.itemconfig(active_student_index, bg="gray", fg="white")
             for x in range(how_many_classes):
                 self.model.students_list[active_student_index].dates.remove(struct_date)
             print("Date removed.")
             self.model.students_list[active_student_index].booking += how_many_classes
         else:
-            self.dates_lb.itemconfig(active_student_index, bg="#59f766", fg="white")
             for x in range(how_many_classes):
                 self.model.students_list[active_student_index].dates.append(struct_date)
             self.model.students_list[active_student_index].booking -= how_many_classes
