@@ -7,7 +7,7 @@ import string
 import time
 import atexit
 import pickle
-# TODO: Add folder(s) for es.ico, file_path.p, settings data, etc.
+# TODO: Add folder(s) for tr.ico, file_path.p, settings data, etc.
 # TODO: Add a delete student button.
 # TODO: Add profile ability so that people sharing the computer can have their own record files.
 # TODO: Add export PayPal invoice (csv) function
@@ -255,7 +255,7 @@ class AddOrEditStudent:
     def __init__(self, action, editee=None):
         self.window = Tk()
         self.window.title("Add or Edit Student")
-        self.window.iconbitmap('es.ico')
+        self.window.iconbitmap("tr.ico")
         self.frame = Frame(self.window)
         self.frame.grid(padx=2, pady=2)
         self.editee_index = None
@@ -335,8 +335,8 @@ class AddOrEditStudent:
 
 root = Tk()
 
-root.title("ES Record Helper")
-root.iconbitmap('es.ico')
+root.title("TutorRecord")
+root.iconbitmap("tr.ico")
 root.resizable(False, False)
 application = MainApplication(root)
 
