@@ -7,4 +7,4 @@ A more user-friendly way to run it is coming soon!
 To run from cmd: ```view_controller.py```
 Or, click on the ```TutorRecord.bat``` file.
 
-Video tutorial coming soon!
+Video tutorial: https://youtu.be/2d0YMncMZ4w
