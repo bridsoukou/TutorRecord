@@ -6,9 +6,13 @@ import time
 class Student:
     def __init__(self):
         self.name = None
+        # How many classes booked in advance
         self.booking = None
+        # Dates on which the student had class
         self.dates = []
-        self.column = None    # M, T, W, T, F, S, S
+        # Which column the student has in the spreadsheet
+        self.column = None
+        # Schedule code         M, T, W, T, F, S, S
         self.classes_per_day = [0, 0, 0, 0, 0, 0, 0]
         self.class_dates_until_today = []
 
@@ -18,8 +22,10 @@ class Model:
         self.file_name = file_path
 
         self.workbook = openpyxl.load_workbook(file_path)
+        # Get the active sheet from the specified workbook
         self.sheet = self.workbook.active
 
+        # A regex to find both the column and the row.
         self.col_row_regex = re.compile(r"<Cell '\S+'.([A-Z])(\d+)>")
         self.date_format = "%m/%d/%Y"
         self.alt_date_format = "%Y-%m-%d"
@@ -27,6 +33,7 @@ class Model:
         self.booking_row = int("2")
         self.schedcode_row = int("3")
         self.dates_start_row = int("4")
+        # Nothing in this column will be parsed.
         self.ignore_column = "A"
         self.students_list = []
 
@@ -41,11 +48,11 @@ class Model:
     def read_sheet(self):
         if len(self.students_list) > 1:
             self.students_list.clear()
-        # Regex to scan the column and put the column in group 1, the row in group 2.
+        # Get the columns from the sheet.
         cols = self.sheet.columns
 
         for col in cols:
-            # If the column is set to be skipped because it contains labels, skip it!
+            # Find which column we're on. If we're on the ignore_column, skip it!
             mo = self.col_row_regex.search(str(col))
             current_column = mo.group(1)
             if current_column == self.ignore_column:
@@ -60,6 +67,7 @@ class Model:
                 if cell.value is not None:
                     mo = self.col_row_regex.search(str(cell))
                     current_row = int(mo.group(2))
+                    # If we're on the name row, grab the name.
                     if current_row == self.name_row:
                         new_student.name = cell.value
                     elif current_row == self.booking_row:
@@ -69,10 +77,12 @@ class Model:
                     elif current_row >= self.dates_start_row:
                         year_month_day = str(cell.value)[:10]
                         try:
+                            # I don't know exactly why there's an issue here, but this try/except fixes it.
                             struct_time_date = time.strptime(year_month_day, self.date_format)
                         except ValueError:
                             struct_time_date = time.strptime(year_month_day, self.alt_date_format)
                             print("Alt format used")
+                        # Add the dates to the new student's date list.
                         new_student.dates.append(struct_time_date)
 
             if new_student.name is not None:
@@ -116,6 +126,7 @@ class Model:
 
     @staticmethod
     def calculate_class_days(student):
+        # On what dates before today did the student have class, based on his current schedule?
         class_dates_until_today = []
         if student.classes_per_day is not []:
             year_day_format = "Year: %Y Day: %j"
