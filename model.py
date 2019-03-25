@@ -108,6 +108,7 @@ class Model:
                 date_cell = self.sheet[student.column + str(self.dates_start_row + x)]
                 date_cell.value = None
             # Add new dates
+            student.dates.sort()
             for x, date in enumerate(student.dates):
                 date_cell = self.sheet[student.column + str(self.dates_start_row + x)]
                 date_cell.value = time.strftime(self.date_format, date)
